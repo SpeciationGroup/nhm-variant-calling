@@ -24,17 +24,17 @@ Edit any file under `docs/` and the browser reloads automatically!
 mkdocs.yml     # theme, navigation and markdown-extension config (the one config file)
 docs/          # all content — one Markdown file per page (see the `nav:` in mkdocs.yml)
 requirements.txt
-.github/workflows/deploy.yml   # auto-publish to GitHub Pages (see below)
+manual_plan.md  # edit & send to Tymek to suggest structural changes
 ```
 
 ## Suggested edit cycle
 
-The repo lives (for now, privately) at `SpeciationGroup/nhm-variant-calling`.
+The repo lives at `SpeciationGroup/nhm-variant-calling`.
 
-The idea is to collaborate through **local edits and pull requests**: nobody commits straight to
-`main`; each change is drafted on its own branch and merged only after review.
+The idea is to collaborate through **local edits and pull requests**. For section content, nobody
+commits straight to `main` — each change is drafted on its own branch and merged only after review. I (Tymek) will handle the design of the manual; just send me a modified `manual_plan.md`, or other suggestions.
 
-1. **Clone once** (first time only):
+1. **Clone** (do it once):
    ```bash
    git clone git@github.com:SpeciationGroup/nhm-variant-calling.git
    cd nhm-variant-calling
@@ -59,7 +59,3 @@ The idea is to collaborate through **local edits and pull requests**: nobody com
    on the repo page. Say what you changed.
 7. **Review and merge.** The other person reviews the diff on GitHub, comments if needed,
    then clicks **Merge**. Delete the branch afterwards, and everyone `git pull`s `main`.
-
-> **Note for Tymek to enforce this behaviour** (block direct pushes to `main`): repo **Settings → Branches → Add
-> branch protection rule** for `main`, tick *Require a pull request before merging*.
-> Recommended, so nothing reaches `main` unreviewed.
