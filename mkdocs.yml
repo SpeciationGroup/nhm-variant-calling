@@ -1,0 +1,84 @@
+# --- Site metadata -----------------------------------------------------------
+site_name: NHM Variant Calling
+site_description: A hands-on manual for the NHM variant calling course.
+site_author: Natural History Museum
+
+# `site_url` stays commented while the repo is private and unhosted, so `mkdocs serve`
+# works at the root locally. Uncomment it once you make the repo public and enable
+# GitHub Pages (see README.md → "Publishing to GitHub Pages").
+#   site_url: https://speciationgroup.github.io/nhm-variant-calling/
+repo_url: https://github.com/SpeciationGroup/nhm-variant-calling
+repo_name: SpeciationGroup/nhm-variant-calling
+edit_uri: edit/main/docs/
+
+# --- Theme -------------------------------------------------------------------
+theme:
+  name: material
+  features:
+    - navigation.sections   # group modules as sidebar sections
+    - navigation.top        # back-to-top button
+    - navigation.instant    # faster page loads (SPA-style)
+    - navigation.footer     # prev/next links at page bottom
+    - search.suggest
+    - search.highlight
+    - content.code.copy     # copy button on code blocks
+    - toc.follow
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      # `deep purple` is the closest named colour; docs/stylesheets/extra.css
+      # overrides it to the exact brand hex #9A3BFF (top bar).
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+# --- Extra assets -------------------------------------------------------------
+extra_css:
+  - stylesheets/extra.css
+
+# --- Markdown extensions ------------------------------------------------------
+markdown_extensions:
+  - admonition            # !!! note / warning / tip callouts
+  - attr_list
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details      # collapsible callouts
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences  # nested/fenced code blocks
+  - pymdownx.tabbed:
+      alternate_style: true   # tabs, e.g. for optional tracks / tool alternatives
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+# --- Navigation ---------------------------------------------------------------
+nav:
+  - Overview:
+      - "0.1. Welcome!": index.md
+      - "0.2. Shell navigation": overview/shell-navigation.md
+      - "0.3. Software": overview/software.md
+  - "Day 1: from reads to SNPs":
+      - "1.1. Back from the sequencing centre": day1/back-from-sequencing.md
+      - "1.2. Read QC": day1/read-qc.md
+      - "1.3. Read-to-reference alignment": day1/alignment.md
+      - "1.4. Variant calling": day1/variant-calling.md
+  - "Day 2: from SNPs to insights":
+      - "2.1. SNP filtering": day2/snp-filtering.md
+      - "2.2. Exploring your dataset": day2/exploring.md
+      - "2.3. Downstream analyses": day2/downstream.md

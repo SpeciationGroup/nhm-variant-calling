@@ -1,0 +1,17 @@
+# MkDocs build output
+site/
+
+# Python virtual environment
+.venv/
+venv/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Playwright / preview artifacts
+.playwright-mcp/
+
+# OS / editor cruft
+.DS_Store
+*.swp

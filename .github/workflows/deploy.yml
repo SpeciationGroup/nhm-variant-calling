@@ -1,0 +1,33 @@
+name: Deploy site
+
+# Builds the MkDocs site and publishes it to the `gh-pages` branch.
+#
+# Held to MANUAL trigger only for now: the repo is private, and GitHub Pages can't
+# serve a private repo on the free plan, so auto-running on every push would just
+# create an unused `gh-pages` branch and burn Actions minutes. When you make the repo
+# public and enable Pages, uncomment the `push` trigger below so the site republishes
+# automatically on every merge to `main` (see README.md → "Publishing to GitHub Pages").
+
+on:
+  # push:
+  #   branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build and deploy
+        run: mkdocs gh-deploy --force
