@@ -45,7 +45,7 @@ commits straight to `main` — each change is drafted on its own branch and merg
    ```
 3. **Branch** for your change (any short, descriptive name):
    ```bash
-   git checkout -b read-qc-draft
+   git checkout -b your-branch-name
    ```
 4. **Edit and preview.** Change files under `docs/`, previewing live with `mkdocs serve`
    (see *View the manual locally* above).
