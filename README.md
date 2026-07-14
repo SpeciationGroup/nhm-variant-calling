@@ -7,7 +7,7 @@ A manual for the variant calling course at Natural History Museum London (Septem
 ```bash
 # 1. Create and activate a virtual environment
 python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
+source .venv/bin/activate
 
 # 2. Install the toolchain
 pip install -r requirements.txt
@@ -16,13 +16,7 @@ pip install -r requirements.txt
 mkdocs serve
 ```
 
-Edit any file under `docs/` and the browser reloads automatically.
-
-To produce the static site once (output in `site/`):
-
-```bash
-mkdocs build --strict   # --strict fails on broken links / nav — good habit before publishing
-```
+Edit any file under `docs/` and the browser reloads automatically!
 
 ## What's in the repo?
 
@@ -33,15 +27,11 @@ requirements.txt
 .github/workflows/deploy.yml   # auto-publish to GitHub Pages (see below)
 ```
 
-To add or reorder pages, create the Markdown file under `docs/` and add an entry to the
-`nav:` tree in `mkdocs.yml`.
-
 ## Suggested edit cycle
 
-The repo lives (privately) at **`SpeciationGroup/nhm-variant-calling`**. Coordinates are
-already wired into `mkdocs.yml` (`repo_url`, `repo_name`, `edit_uri`).
+The repo lives (for now, privately) at `SpeciationGroup/nhm-variant-calling`.
 
-We collaborate through **local edits and pull requests**: nobody commits straight to
+The idea is to collaborate through **local edits and pull requests**: nobody commits straight to
 `main`; each change is drafted on its own branch and merged only after review.
 
 1. **Clone once** (first time only):
@@ -70,22 +60,6 @@ We collaborate through **local edits and pull requests**: nobody commits straigh
 7. **Review and merge.** The other person reviews the diff on GitHub, comments if needed,
    then clicks **Merge**. Delete the branch afterwards, and everyone `git pull`s `main`.
 
-> **To enforce this** (block direct pushes to `main`): repo **Settings → Branches → Add
+> **Note for Tymek to enforce this behaviour** (block direct pushes to `main`): repo **Settings → Branches → Add
 > branch protection rule** for `main`, tick *Require a pull request before merging*.
 > Recommended, so nothing reaches `main` unreviewed.
-
-## Publishing the live site (later)
-
-Held off while the repo is private — GitHub Pages can't serve a private repo on the free
-plan. When the manual is ready to go public:
-
-1. **Make the repo public** — **Settings → General → Danger Zone → Change visibility →
-   Public**.
-2. **Turn the deploy workflow back on** — in `.github/workflows/deploy.yml` uncomment the
-   `push:` trigger, and in `mkdocs.yml` uncomment the `site_url` line.
-3. **Enable Pages** — **Settings → Pages → Build and deployment → Source: Deploy from a
-   branch → Branch: `gh-pages` / `root`**. The site goes live at
-   `https://speciationgroup.github.io/nhm-variant-calling/`.
-
-> The workflow runs `mkdocs gh-deploy --force`. You can also deploy manually any time
-> with `mkdocs gh-deploy` (needs push access and Pages enabled).
