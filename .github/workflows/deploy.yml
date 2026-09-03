@@ -1,0 +1,35 @@
+name: Deploy site
+
+# Builds the MkDocs site and publishes it to the `gh-pages` branch.
+#
+# The repo is public with Pages enabled, so the site republishes automatically on
+# every push to `main`. `workflow_dispatch` is kept so you can also redeploy by hand
+# from the Actions tab without pushing a commit.
+#
+# Note: `mkdocs gh-deploy` does NOT use --strict, so a build with broken `nav:`
+# references still deploys (the affected pages just go missing from the sidebar).
+# Run `mkdocs build --strict` locally before merging if you want that caught.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build and deploy
+        run: mkdocs gh-deploy --force

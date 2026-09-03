@@ -1,0 +1,28 @@
+/* Custom brand colour for the NHM Variant Calling course.
+   The palette in mkdocs.yml sets `primary: deep purple` (a sane named fallback
+   that also makes the header text/icons white). This file overrides the exact
+   hex to the requested #9A3BFF. Because it targets the same attribute selector
+   the theme uses and is loaded *after* the theme CSS, it wins the cascade. */
+[data-md-color-primary="deep-purple"] {
+  --md-primary-fg-color:        #9A3BFF;  /* top bar */
+  --md-primary-fg-color--light: #b47bff;
+  --md-primary-fg-color--dark:  #7a25d6;
+}
+
+/* Use the same purple for accents (links, hover, active TOC) so the theme
+   reads as one system rather than purple bar + teal links. */
+[data-md-color-accent="deep-purple"] {
+  --md-accent-fg-color: #9A3BFF;
+}
+
+/* Footnotes (our citations) are always emitted by MkDocs in one block at the very
+   bottom of the page, introduced by a horizontal rule. Since pages introduce them
+   with their own "## References" heading, that rule reads as a stray line between
+   the heading and the list — hide it and tighten the gap. */
+.md-typeset .footnote > hr {
+  display: none;
+}
+
+.md-typeset .footnote {
+  margin-top: 0;
+}

@@ -1,0 +1,97 @@
+# --- Site metadata -----------------------------------------------------------
+site_name: NHM Variant Calling
+site_description: A hands-on manual for the NHM variant calling course.
+site_author: Natural History Museum
+
+# The repo is public with GitHub Pages enabled, so `site_url` is set: it gives the
+# theme an absolute base for the sitemap, canonical links and social-card URLs.
+site_url: https://speciationgroup.github.io/nhm-variant-calling/
+repo_url: https://github.com/SpeciationGroup/nhm-variant-calling
+repo_name: SpeciationGroup/nhm-variant-calling
+edit_uri: edit/main/docs/
+
+# The default `mkdocs serve` port (8000) is occupied on this machine, so plain
+# `mkdocs serve` dies with "OSError: [Errno 98] Address already in use". This sets
+# the preview port to 8080 instead. Affects `mkdocs serve` only — the built site
+# and the GitHub Pages deploy are unaffected.
+dev_addr: 127.0.0.1:8080
+
+# --- Theme -------------------------------------------------------------------
+theme:
+  name: material
+  features:
+    - navigation.sections   # group modules as sidebar sections
+    - navigation.top        # back-to-top button
+    - navigation.instant    # faster page loads (SPA-style)
+    - navigation.footer     # prev/next links at page bottom
+    - search.suggest
+    - search.highlight
+    - content.code.copy     # copy button on code blocks
+    - toc.follow
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      # `deep purple` is the closest named colour; docs/stylesheets/extra.css
+      # overrides it to the exact brand hex #9A3BFF (top bar).
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+# --- Extra assets -------------------------------------------------------------
+extra_css:
+  - stylesheets/extra.css
+
+# MathJax renders the LaTeX that `pymdownx.arithmatex` marks up (see below).
+# Order matters: our config object must be defined before MathJax loads.
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+# --- Markdown extensions ------------------------------------------------------
+markdown_extensions:
+  - admonition            # !!! note / warning / tip callouts
+  - attr_list
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:  # LaTeX maths — rendered by MathJax, see extra_javascript
+      generic: true
+  - pymdownx.details      # collapsible callouts
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences  # nested/fenced code blocks
+  - pymdownx.tabbed:
+      alternate_style: true   # tabs, e.g. for optional tracks / tool alternatives
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+# --- Navigation ---------------------------------------------------------------
+nav:
+  - Overview:
+      - "0.1. Welcome!": index.md
+  - "Reads-to-SNPs":
+      - "1.1. Read QC & trimming": 1.reads2snps/1.1.qc-trimming.md
+      - "1.2. Alignment to reference": 1.reads2snps/1.2.alignment.md
+      - "1.3. Variant calling": 1.reads2snps/1.3.calling.md
+      - "1.4. Variant filtering": 1.reads2snps/1.4.filtering.md
+  - "Basic analyses":
+      - "2.1. Principal component analysis (PCA)": 2.basic_analyses/2.1.PCA.md
+      - "2.2. Genome scans": 2.basic_analyses/2.2.genome_scans.md
+# `day1/day1_notes.md` is deliberately left out of the nav — it is a private
+# scratchpad, not a worksheet. It still builds (MkDocs only logs an INFO), but
+# it is unreachable from the sidebar.

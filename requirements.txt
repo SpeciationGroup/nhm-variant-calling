@@ -1,0 +1,2 @@
+# Pin the toolchain so local builds and CI match.
+mkdocs-material>=9.5,<10
