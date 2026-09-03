@@ -2,8 +2,6 @@
 
 ### View the manual: **[speciationgroup.github.io/nhm-variant-calling](https://speciationgroup.github.io/nhm-variant-calling/)**
 
-Source repository: [github.com/SpeciationGroup/nhm-variant-calling](https://github.com/SpeciationGroup/nhm-variant-calling)
-
 ## Lecture slides
 
 - [1.1. Read QC & trimming](docs/slides/1.1.qc-trimming.pdf)

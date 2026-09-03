@@ -31,3 +31,7 @@ Feel free to review the lecture slides at any time:
 ## Papers
 
 We provide PDSs for all the papers referenced in the work. Just click on the in-text reference ([Cock et al., 2010](papers/cock2010.pdf)) to download!
+
+## Source
+
+This manual is built from a public repository: [github.com/SpeciationGroup/nhm-variant-calling](https://github.com/SpeciationGroup/nhm-variant-calling).
