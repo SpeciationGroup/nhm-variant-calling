@@ -1,0 +1,1312 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A hands-on manual for the NHM variant calling course.">
+      
+      
+        <meta name="author" content="Natural History Museum">
+      
+      
+        <link rel="canonical" href="https://speciationgroup.github.io/nhm-variant-calling/1.reads2snps/1.3.calling/">
+      
+      
+        <link rel="prev" href="../1.2.alignment/">
+      
+      
+        <link rel="next" href="../1.4.filtering/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>1.3. Variant calling - NHM Variant Calling</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#13-variant-calling" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="NHM Variant Calling" class="md-header__button md-logo" aria-label="NHM Variant Calling" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NHM Variant Calling
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1.3. Variant calling
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SpeciationGroup/nhm-variant-calling" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SpeciationGroup/nhm-variant-calling
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="NHM Variant Calling" class="md-nav__button md-logo" aria-label="NHM Variant Calling" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    NHM Variant Calling
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SpeciationGroup/nhm-variant-calling" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SpeciationGroup/nhm-variant-calling
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Overview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. Welcome!
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reads-to-SNPs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reads-to-SNPs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.1.qc-trimming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1. Read QC & trimming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.2.alignment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2. Alignment to reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3. Variant calling
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3. Variant calling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#131-calling-prep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.3.1) Calling prep
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#132-variant-calling-with-bcftools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.3.2) Variant calling with BCFtools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#133-the-vcf-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.3.3) The VCF format
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#134-interrogating-vcfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.3.4) Interrogating VCFs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#136-bonus-an-alternative-variant-calling-strategy-with-gatk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.3.6) BONUS: An alternative variant calling strategy with GATK
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#137-bonus-comparing-bcftools-and-gatk-callsets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.3.7) BONUS: comparing BCFtools and GATK callsets
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.4.filtering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.4. Variant filtering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Basic analyses
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Basic analyses
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2.basic_analyses/2.1.PCA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1. Principal component analysis (PCA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2.basic_analyses/2.2.genome_scans/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2. Genome scans
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#131-calling-prep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.3.1) Calling prep
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#132-variant-calling-with-bcftools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.3.2) Variant calling with BCFtools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#133-the-vcf-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.3.3) The VCF format
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#134-interrogating-vcfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.3.4) Interrogating VCFs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#136-bonus-an-alternative-variant-calling-strategy-with-gatk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.3.6) BONUS: An alternative variant calling strategy with GATK
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#137-bonus-comparing-bcftools-and-gatk-callsets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.3.7) BONUS: comparing BCFtools and GATK callsets
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="13-variant-calling">1.3. Variant calling<a class="headerlink" href="#13-variant-calling" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Learning objectives</p>
+<p>By the end of this worksheet, you will:</p>
+<ul>
+<li>Call variants with BCFtools.</li>
+<li>Understand the structure of a VCF file.</li>
+<li>Interrogate VCFs with BCFtools.</li>
+<li>BONUS: call variants with GATK, if there is time.</li>
+</ul>
+</div>
+<p>The goal of variant calling is to determine, at every position of the reference, the alleles carried by our sample individuals - or their <strong>genotypes</strong>. Unfortunately, we never observe the genotypes directly. Instead, we are forced to work with piles of aligned (short) reads: these might be misplaced, carry errors, or be too scarce to provide sufficient information for a confident genotype call. Calling is therefore a statistical endeavour.</p>
+<h2 id="131-calling-prep">(1.3.1) Calling prep<a class="headerlink" href="#131-calling-prep" title="Permanent link">&para;</a></h2>
+<p>We will use BCFtools to perform variant calling. The software uses a <strong>joint calling</strong> strategy, originally designed to accommodate for low-coverage samples (<a href="../../papers/li2011.pdf">Li, 2011</a>): a weakly supported non-reference allele in sample A gains credibility if it's also found in sample B. While many more modern variant callers exist (see box below), BCFtools has stood the test of time (<a href="../../papers/danecek2021.pdf">Danacek, 2021</a>; <a href="../../papers/lefouili2022.pdf">Lefouili and Nam, 2022</a>) and can be seamlessly integrated with SAMtools to demonstrate calling principles.</p>
+<div class="admonition tip">
+<p class="admonition-title">Variant calling algorithms</p>
+<p>Apart from BCFtools, several other calling algorithms, varying in their calling principles, are in common use. <strong>GATK <code>HaplotypeCaller</code></strong>, for example, performs local haplotype assembly to identify variant sites (more on that in the bonus section 1.3.7) and is likely the most widely used caller in human genomics. <strong><code>freebayes</code></strong> takes a similar haplotype-based approach but with a simpler Bayesian model. Finally, <strong>DeepVariant</strong> replaces the statistical model entirely: it turns the alignment into an image-like representation and classifies genotypes with a neural network trained on 'truth sets'. Unfortunately, benchmark rankings for all of these are built almost entirely on human datsets (<a href="../../papers/kumaran2019.pdf">Kumaran et al., 2019</a>).</p>
+</div>
+<p>As a reminder, you should still be in your private <code>reads2snps</code> directory. The first task in this worksheet is to prepare a list of BAM files for joint calling. We will use the <code>sed</code> stream editor to write their <strong>paths</strong> to a text file based on the stored sample names.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Just a reminder!</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>~/reads2snps
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Define input &amp; output names</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nv">SAMPLES</span><span class="o">=</span>./samples.txt
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nv">BAMS</span><span class="o">=</span>./bams.txt
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>sed<span class="w"> </span><span class="s1">'s|.*|2.aligned/&amp;.bam|'</span><span class="w"> </span><span class="nv">$SAMPLES</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$BAMS</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>cat<span class="w"> </span><span class="nv">$BAMS</span>
+</code></pre></div>
+<p>In the <code>sed</code> command, <code>s|old|new|</code> allows us to <strong>substitute</strong> whatever matches the first part with the second. The pattern <code>.*</code> is a regular expression that matches any character (<code>.</code>) repeated any number of times (<code>*</code>). The matched characters are then substituted instead as <code>&amp;</code> inside the longer <code>2.aligned/&amp;.bam</code> strings. Neat, isn't it?</p>
+<div class="admonition tip">
+<p class="admonition-title">Glob alternative</p>
+<p>Alternatively, the BAM-path file could be written with <code>printf '%s\n' 2.aligned/*.bam &gt; "$BAMS"</code>. Then, however, you'd need to be sure that you want to include all the BAMs in the <code>2.aligned</code> directory. Today, the answer is likely 'yes', but it is generally good practice to explicitly define the inputs based on a config. </p>
+</div>
+<h2 id="132-variant-calling-with-bcftools">(1.3.2) Variant calling with BCFtools<a class="headerlink" href="#132-variant-calling-with-bcftools" title="Permanent link">&para;</a></h2>
+<p>Variant calling with BCFtools consists of two steps: <strong>(1)</strong> <code>mpileup</code>, that, for each vertical 'slice' through the given alignment (i.e., site), computes genotype likelihoods (based on base qualities, read mapping qualities, etc.) and <strong>(2)</strong> <code>call</code>, that evaluates the most likely genotypes under the assumption of Hardy-Weinberg equilibrium (<a href="../../papers/danecek2021.pdf">Danacek, 2021</a>). The two commands can be piped together so the intermediate never touches disk, and the final output is recorded as a VCF file. Run the caller, and then we'll break the commands down.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># BCFtools mpileup / call inputs</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nv">REF</span><span class="o">=</span>./ref/chrom1_1Mb.fa
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nv">BAMS</span><span class="o">=</span>./bams.txt
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># BCFtools mpileup / call output</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nv">VCF_PREFIX</span><span class="o">=</span>./3.calls/bcftools/littorina
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># Commands</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>./3.calls/bcftools
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>bcftools<span class="w"> </span>mpileup<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span>-a<span class="w"> </span>FORMAT/SP,FORMAT/DP<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span>-f<span class="w"> </span><span class="nv">$REF</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span>-b<span class="w"> </span><span class="nv">$BAMS</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span>-Ou<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>bcftools<span class="w"> </span>call<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span>-m<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span>-a<span class="w"> </span>FORMAT/GQ<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span>-Oz<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span>-o<span class="w"> </span><span class="si">${</span><span class="nv">VCF_PREFIX</span><span class="si">}</span>.vcf.gz
+</code></pre></div>
+<p>Note that we used a VCF_PREFIX variable <strong>without an extension</strong>. This will make it easier to create multiple VCF files with different extensions, and we'll see a couple in the next worksheet. Now, what do the different flags mean?</p>
+<p><code>bcftools mpileup</code>:</p>
+<ul>
+<li><code>-a</code> annotates each record with extra fields (<code>FORMAT/SP</code>and <code>FORMAT/DP</code>) that are not emitted by default. Exactly what these mean will become clear once we inspect the VCF file (see below).</li>
+<li><code>-f</code> and <code>-b</code> specify the reference FASTA and BAM-list file, respectively.</li>
+<li><code>-Ou</code> specifies that the output (<code>-O</code>) should be in an uncompressed BCF format (<code>u</code>). The BCF format is a binary counterpart of VCF (think of SAM -&gt; BAM); here, it's just used inside the pipe for efficiency.</li>
+</ul>
+<p><code>bcftools call</code>:</p>
+<ul>
+<li><code>-m</code> selects the 'multiallelic caller' algorithm instead of an older 'consensus caller' (<code>-c</code>), which can detect at most one alternative allele per site. Neither of these options is default, and one of them needs to provided.</li>
+<li><code>-a</code> is analogous to <code>mpileup -a</code> but adds fields specific to the <code>call</code> stage. Think of the division of labour between the two commands - while <code>mpileup</code> handles reads, <code>call</code> works with genotypes. Some annotations are derived from directly from the latter (more on that later).</li>
+<li><code>-Oz</code> specifies a compressed VCF output, hence the <code>.vcf.gz</code> extension.</li>
+</ul>
+<p>One commonly included option that we deliberately <strong>avoided</strong> is <code>-v</code> (or <code>--variants-only</code>) used with <code>bcftools call</code>. Passing <code>-v</code> would emit only variant sites, discarding all invariant sites, where no alternative alleles have been called. This interferes with calculating population genetic statistics such as nucleotide diversity (<span class="arithmatex">\(\pi\)</span>) and divergence (<span class="arithmatex">\(d_{xy}\)</span>), so we recommend you avoid this flag, if possible.  </p>
+<div class="admonition tip">
+<p class="admonition-title">On VCF compression</p>
+<p>Note that VCF files produced with <code>-Oz</code> are compressed using <a href="https://www.htslib.org/doc/bgzip.html"><code>bgzip</code></a> and not plain <code>gzip</code>. Keep this in mind, since bgzip-compression is required by some commands such as <code>bcftools index</code>.</p>
+</div>
+<h2 id="133-the-vcf-format">(1.3.3) The VCF format<a class="headerlink" href="#133-the-vcf-format" title="Permanent link">&para;</a></h2>
+<p>The VCF (Variant Call Format) is defined in full <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">here</a>; today we'll just cover its most important aspects.</p>
+<p>Similarly to a SAM, a VCF splits into a header and a 'body'. Since it's a tradition by now, let's examine the header first. BCFtools is used not only for calling but for manipulating VCFs generally, and it has a dedicated command for this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>bcftools<span class="w"> </span>head<span class="w"> </span><span class="si">${</span><span class="nv">VCF_PREFIX</span><span class="si">}</span>.vcf.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>less<span class="w"> </span>-S
+</code></pre></div>
+<p>Note that all but the final displayed line start with <code>##</code>. The first always states the VCF format version - here <code>VCFv4.2</code> - and further down you should find the BCFtools version and the commands that produced the file. Most of the header, though, is taken up by repeated <code>##INFO</code> and <code>##FORMAT</code> lines. Let's examine one:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>zcat<span class="w"> </span><span class="si">${</span><span class="nv">VCF_PREFIX</span><span class="si">}</span>.vcf.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"##INFO"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1
+</code></pre></div>
+<p>Where <code>tail -1</code> extracts the final line of the input. Notice how the <code>##INFO</code> line is essentially a dictionary entry: the key <code>MQ</code> takes an <code>Integer</code>, and it means <code>Average mapping quality</code>. </p>
+<p>Now, can you recall the <code>-a</code> flag we passed to <code>mpileup</code> and <code>call</code>? The codes we asked for there - <code>FORMAT/SP</code>, <code>FORMAT/SP</code>, <code>FORMAT/GQ</code> - carry the same two prefixes as encountered in the VCF header, and for good reason. <code>INFO</code> and <code>FORMAT</code> are <strong>columns of the VCF body</strong>, each gathering a set of annotations that the header defines one by one. Every annotation therefore appears in two places - declared once in the header, and then carried as a value by those records it applies to. Let's turn to the data lines to see them. We will use another useful BCFtool command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># grep -v matches lines that DON'T contain a pattern</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>bcftools<span class="w"> </span>view<span class="w"> </span><span class="si">${</span><span class="nv">VCF_PREFIX</span><span class="si">}</span>.vcf.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s1">'^##'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>less<span class="w"> </span>-S
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Or the below, without column names</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># bcftools view -H ${VCF_PREFIX}.vcf.gz | less -S</span>
+</code></pre></div>
+<p>You can now see the data columns with their corresponding names (top line). Unfortunately, since the columns are tab-separated and vary a lot in width, the names rarely line up neatly above their values on screen. Below column names, each line corresponds to a <strong>record</strong> - a variant or an invariant site. </p>
+<p>Here is a breakdown of the columns that define the records:</p>
+<ul>
+<li><strong>CHROM</strong> — the name of the reference sequence the site sits on. This matches a <code>##contig</code> line in the header.</li>
+<li><strong>POS</strong> — position of the site along the reference. For indels this is the last unaffected base immediately preceding the event.</li>
+<li><strong>ID</strong> — a variant identifier. Freshly called variants are usually <code>.</code>.</li>
+<li><strong>REF</strong> — the reference allele: the base(s) present at this position in the reference genome.</li>
+<li><strong>ALT</strong> — the alternate allele(s) called in the data, comma-separated if there is more than one (e.g. <code>A,T</code>). A <code>.</code> means no alternate was found (invariant site).</li>
+<li><strong>QUAL</strong> — a Phred-scaled quality score for the assertion made in the ALT column. Both variant and invariant sites can carry a QUAL value, though it is occasionally <code>.</code>.</li>
+<li><strong>FILTER</strong> — <code>PASS</code> if the site passed every filter, or a semicolon-separated list of the filters it failed (each defined by a <code>##FILTER</code> line). A <code>.</code> means no filtering has been applied yet - as is the case for our freshly called VCF.</li>
+<li><strong>INFO</strong> — annotations defined at <strong>site-level</strong>, given as a semicolon-separated list of <code>key=value</code> pairs (e.g. <code>DP=65;MQ=15</code>, etc.). Each key is defined by an <code>##INFO</code> line. A given score describes the record as a whole.</li>
+<li><strong>FORMAT</strong> — annotations defined at <strong>sample-level</strong>, given as a colon-separated list of <strong>keys only</strong>. Each key is defined by a <code>##FORMAT</code> line. The order of FORMAT annotations is replicated in the sample fields (see below).</li>
+<li><strong>Sample columns</strong> — one column per sample, each holding a colon-separated list consisting of a <strong>genotype</strong> and values defined by the FORMAT column. The genotypes are encoded against the REF/ALT alleles: <code>0</code> = REF, <code>1</code> = first ALT, <code>2</code> = second ALT, and so on. Accordingly, <code>0/0</code> is homozygous reference, <code>0/1</code> heterozygous, <code>1/1</code> homozygous alternate, whereas <code>./.</code> is a missing genotype.</li>
+</ul>
+<p>Some of the above definitions might sound somewhat abstract. The key thing to understand is <strong>the relationship between the INFO, FORMAT and sample columns</strong>, so do spend time trying to relate them to one another.</p>
+<h2 id="134-interrogating-vcfs">(1.3.4) Interrogating VCFs<a class="headerlink" href="#134-interrogating-vcfs" title="Permanent link">&para;</a></h2>
+<p>Reading a VCF with <code>less</code> is fine for exploration - for extracting specific information, specialised BCFtools commands come to the rescue. Sample names, for example, can be extracted using <code>bcftools query</code> with the <code>-l</code> flag:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>bcftools<span class="w"> </span>query<span class="w"> </span>-l<span class="w"> </span><span class="si">${</span><span class="nv">VCF_PREFIX</span><span class="si">}</span>.vcf.gz
+</code></pre></div>
+<p>A more elaborate <code>query</code> command extracts specific INFO and FORMAT annotations:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>bcftools<span class="w"> </span>query<span class="w"> </span>-i<span class="w"> </span><span class="s1">'TYPE="snp"'</span><span class="w"> </span>-f<span class="w"> </span><span class="s1">'%CHROM\t%POS\t%REF\t%ALT\t%QUAL\t%INFO/DP[\t%GT:%DP]\n'</span><span class="w"> </span><span class="si">${</span><span class="nv">VCF_PREFIX</span><span class="si">}</span>.vcf.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>head
+</code></pre></div>
+<p>This prints a tab-separated table, ready for further analyses in R, for example. In the above command, note the following:</p>
+<ul>
+<li><strong><code>-i 'TYPE="snp"'</code></strong> keeps only SNP records - assuming we are only interested in those.</li>
+<li><strong><code>-f</code></strong> reads a string that requests specific fields:<ul>
+<li><code>%</code> marks a field. Everything else is printed to output literally: <code>\t</code> is a tab and <code>\n</code> is a new line character.</li>
+<li><code>INFO/</code> before <code>DP</code> is required to distinguish between site-level and sample-level values; <code>DP</code> is represented in both INFO and FORMAT.</li>
+<li>Square brackets loop over sample-level values (same order as <code>bcftools query -l</code>). Note the positioning of <code>\t</code> - it sits inside the brackets, so a tab is printed once per sample rather than once per line.</li>
+</ul>
+</li>
+</ul>
+<p>Just like SAMtools, BCFtools can print a summary report of the whole file. This will answer one fundamental question - how many, and what kind of, sites are present in our VCF?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>bcftools<span class="w"> </span>stats<span class="w"> </span><span class="si">${</span><span class="nv">VCF_PREFIX</span><span class="si">}</span>.vcf.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>less<span class="w"> </span>-S
+</code></pre></div>
+<p>Alright, that's another big report, and we're not saving this one to disk. Instead, using some of the tricks we learnt before - but now in combination with a <code>cut</code> command that extracts columns 3 and 4 - we can pull out just the summary numbers:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>bcftools<span class="w"> </span>stats<span class="w"> </span><span class="si">${</span><span class="nv">VCF_PREFIX</span><span class="si">}</span>.vcf.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^SN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-f3,4
+</code></pre></div>
+<p>Now, we have a compact report: the number of records in the file, how many of them are 'no-ALTs' (= invariant sites), and a breakdown of the rest into SNPs, indels and multiallelic sites. Of course, we can request information in an even more streamlined manner. For example, just the SNP count:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>bcftools<span class="w"> </span>view<span class="w"> </span>-Hv<span class="w"> </span>snps<span class="w"> </span><span class="si">${</span><span class="nv">VCF_PREFIX</span><span class="si">}</span>.vcf.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+</code></pre></div>
+<p>Where <code>-H</code> narrows down the output to just the VCF body, <code>-v snps</code> requests SNPs only, and <code>wc -l</code> counts lines. The number shoud be identical to that reported by <code>bcftools stats</code>!</p>
+<p>Finally, especially with a big VCF, you could be interested in just interrogating a specific region of a specific chromosome. First, we need to index our VCF...</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>bcftools<span class="w"> </span>index<span class="w"> </span><span class="si">${</span><span class="nv">VCF_PREFIX</span><span class="si">}</span>.vcf.gz
+</code></pre></div>
+<p>...and only access our region of interest with <code>bcftools view</code>. This is specified with a string provided to the <code>-r</code> flag: </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>bcftools<span class="w"> </span>view<span class="w"> </span>-H<span class="w"> </span>-r<span class="w"> </span>NC_090245.1:1-10<span class="w"> </span><span class="si">${</span><span class="nv">VCF_PREFIX</span><span class="si">}</span>.vcf.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>less<span class="w"> </span>-S
+</code></pre></div>
+<p>Where <code>NC_090245.1</code> is the name of our reference and <code>1-10</code> is the target range.</p>
+<p>The moral is - bioinformaticians who work with VCF files typically use BCFtools every day, so familiarity with the different usage patterns is very useful (that's why we are spending time on it!). The <a href="https://www.htslib.org/doc/bcftools.html">docs</a> are definitely your friend on this adventure.</p>
+<h2 id="136-bonus-an-alternative-variant-calling-strategy-with-gatk">(1.3.6) BONUS: An alternative variant calling strategy with <code>GATK</code><a class="headerlink" href="#136-bonus-an-alternative-variant-calling-strategy-with-gatk" title="Permanent link">&para;</a></h2>
+<p>You may realise that the addition of new samples would necessitate rerunning both the <code>bcftools mpileup</code> and <code>call</code> commands. While this might not seem daunting with our sample and file sizes, adding an additional sample to a realistic dataset
+(say, 30 full-size <em>Littorina</em> genomes) means redoing the whole run. So - not a trivial cost!</p>
+<p>This issue is addressed by a calling strategy adopted by <a href="https://gatk.broadinstitute.org/hc/en-us"><strong>GATK (Genome Analysis ToolKit)</strong></a>. GATK also splits calling into two steps: however, genotype likelihoods are first computed <em>independently</em> for each sample, with joint calling as the second step. While the first step is not obviously cheaper, it only ever has to be done <strong>once per sample</strong>. In other words, adding sample no 31 means that 30 / 31 samples have already been processed. </p>
+<p>Another potential advantage of GATK lies in its approach to identifying variant positions in the first place. Rather than scanning a pre-computed alignment, the per-sample <code>HaplotypeCaller</code> performs local re-assembly of candidate (or <a href="LINK">'active'</a>) regions and realigns reads against the re-assembled haplotypes. This strategy has been shown to be particularly effective for the discovery of indels, many of which are missed by pileup-style callers (Poplin et al., 2017).</p>
+<div class="admonition tip">
+<p class="admonition-title">GATK</p>
+<p>GATK is extensively documented, with <a href="https://gatk.broadinstitute.org/hc/en-us/sections/360007226631-Tutorials">tutorials</a> and a <a href="https://gatk.broadinstitute.org/hc/en-us/community/topics">user forum</a>. Note that older GATK versions also included another calling algorithm, <code>UnifiedGenotyper</code>, which is essentially a pileup-style caller and of significantly less interest than <code>HaplotypeCaller</code>. </p>
+</div>
+<p>We have pre-computed all the gVCFs, which you can find under <code>/home/Share/reads2snps/3.calls/gatk</code>. For practice, run the algorithm on one sample using the commands below.</p>
+<p>First, GATK needs one additional indexing of the reference and the BAM:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nv">REF</span><span class="o">=</span>./ref/chrom1_1Mb.fa
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>samtools<span class="w"> </span>dict<span class="w"> </span><span class="nv">$REF</span><span class="w"> </span>-o<span class="w"> </span><span class="si">${</span><span class="nv">REF</span><span class="p">%.fa</span><span class="si">}</span>.dict
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Check what % does</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">REF</span><span class="p">%.fa</span><span class="si">}</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="nv">SAMPLE</span><span class="o">=</span>ACF_2
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="nv">BAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.bam
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>samtools<span class="w"> </span>index<span class="w"> </span><span class="nv">$BAM</span>
+</code></pre></div>
+<p>Run <code>HaplotypeCaller</code> for one sample:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># HaplotypeCaller inputs</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nv">SAMPLE</span><span class="o">=</span>ACF_2
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nv">BAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.bam
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># HaplotypeCaller outputs</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="nv">GVCF_DIR</span><span class="o">=</span>./3.calls/gatk
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1"># Commands</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$GVCF_DIR</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>gatk<span class="w"> </span>HaplotypeCaller<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">    </span>--java-options<span class="w"> </span><span class="s2">"-Xmx4000m"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">    </span>-R<span class="w"> </span><span class="nv">$REF</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="w">    </span>-I<span class="w"> </span><span class="nv">$BAM</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="w">    </span>-O<span class="w"> </span><span class="si">${</span><span class="nv">GVCF_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.g.vcf.gz<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="w">    </span>-ploidy<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="w">    </span>--native-pair-hmm-threads<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="w">    </span>--emit-ref-confidence<span class="w"> </span>GVCF
+</code></pre></div>
+<p>Where:</p>
+<ul>
+<li><strong><code>--native-pair-hmm-threads</code></strong> sets the number of threads used by the read-to-haplotype alignment algorithm</li>
+<li><strong><code>--emit-ref-confidence</code></strong> determines how likelihoods are emitted for non-variant sites. <code>GVCF</code> makes it score <em>every</em> position, but collapse runs of consecutive sites with comparable confidence into single 'reference blocks''.</li>
+</ul>
+<details class="success">
+<summary>The full <code>HaplotypeCaller</code> loop - just for reference</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># Samples are read from a file, one name per line.</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="nv">IN_FILE</span><span class="o">=</span><span class="nv">$1</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>readarray<span class="w"> </span>-t<span class="w"> </span>SAMPLES<span class="w"> </span>&lt;<span class="w"> </span><span class="s2">"</span><span class="nv">$IN_FILE</span><span class="s2">"</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="c1"># The reference and its dictionary are the same for every sample.</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="nv">REF</span><span class="o">=</span>./ref/chrom1_1Mb.fa
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>samtools<span class="w"> </span>dict<span class="w"> </span><span class="nv">$REF</span><span class="w"> </span>-o<span class="w"> </span><span class="si">${</span><span class="nv">REF</span><span class="p">%.fa</span><span class="si">}</span>.dict
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="nv">GVCF_DIR</span><span class="o">=</span>./3.calls/gatk
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$GVCF_DIR</span><span class="w"> </span><span class="nv">$GVCF_DIR</span>/logs
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="k">for</span><span class="w"> </span>SAMPLE<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="si">${</span><span class="nv">SAMPLES</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Starting sample </span><span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span><span class="s2">..."</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="w">    </span><span class="nv">BAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.bam
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="w">    </span><span class="nv">GVCF</span><span class="o">=</span><span class="si">${</span><span class="nv">GVCF_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.g.vcf.gz
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="w">    </span><span class="nv">LOG</span><span class="o">=</span><span class="si">${</span><span class="nv">GVCF_DIR</span><span class="si">}</span>/logs/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.log
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a><span class="w">    </span>samtools<span class="w"> </span>index<span class="w"> </span><span class="nv">$BAM</span>
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="w">    </span><span class="c1"># The &amp; at the end sends this into the background, so the loop</span>
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a><span class="w">    </span><span class="c1"># starts the next sample instead of waiting. Each caller writes to</span>
+<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a><span class="w">    </span><span class="c1"># its own log - otherwise the messages of all samples would interleave.</span>
+<a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a><span class="w">    </span><span class="o">(</span>
+<a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a><span class="w">        </span>gatk<span class="w"> </span>HaplotypeCaller<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a><span class="w">            </span>--java-options<span class="w"> </span><span class="s2">"-Xmx4000m"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a><span class="w">            </span>-R<span class="w"> </span><span class="nv">$REF</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a><span class="w">            </span>-I<span class="w"> </span><span class="nv">$BAM</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a><span class="w">            </span>-O<span class="w"> </span><span class="nv">$GVCF</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a><span class="w">            </span>-ploidy<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a><span class="w">            </span>--native-pair-hmm-threads<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a><span class="w">            </span>--emit-ref-confidence<span class="w"> </span>GVCF<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a><span class="w">            </span>&gt;<span class="w"> </span><span class="nv">$LOG</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+<a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Finished sample </span><span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span><span class="s2">."</span>
+<a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a><span class="w">    </span><span class="o">)</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a><span class="k">done</span>
+<a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a>
+<a id="__codelineno-14-41" name="__codelineno-14-41" href="#__codelineno-14-41"></a><span class="c1"># Without this, the script would exit while the callers are still running.</span>
+<a id="__codelineno-14-42" name="__codelineno-14-42" href="#__codelineno-14-42"></a><span class="nb">wait</span>
+<a id="__codelineno-14-43" name="__codelineno-14-43" href="#__codelineno-14-43"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"All samples done."</span>
+</code></pre></div>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">GATK</p>
+<p>Examine the gVCF yourself and try spotting the differences from a regular VCF!</p>
+</div>
+<p>Oof, <code>HaplotypeCaller</code> did not run instantaneously - as expected - but remember this is done only once per sample. Let's copy over all the pre-computed gVCFs...</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">GVCF_DIR</span><span class="o">=</span>./3.calls/gatk
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1"># This copies both .g.vcf.gz and .g.vcf.gz.tbi index files</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>cp<span class="w"> </span>/home/Share/reads2snps/3.calls/gatk/*.g.vcf.gz*<span class="w"> </span><span class="nv">$GVCF_DIR</span>
+</code></pre></div>
+<p>...and combine them into one:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># CombineGVCFs inputs</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="c1"># Rather than 11 arguments, we pass a file listing the gVCFs.</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="c1"># The grep excludes our own output, in case you run this twice.</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="nv">GVCF_DIR</span><span class="o">=</span>./3.calls/gatk
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>ls<span class="w"> </span><span class="nv">$GVCF_DIR</span>/*.g.vcf.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">"/littorina"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>&gt;<span class="w"> </span>gvcf.list
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># CombineGVCFs outputs</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="nv">REF</span><span class="o">=</span>./ref/chrom1_1Mb.fa
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="nv">GVCF_TMP</span><span class="o">=</span>./3.calls/gatk/littorina.TMP.g.vcf.gz
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="c1"># Commands</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>gatk<span class="w"> </span>CombineGVCFs<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">   </span>-R<span class="w"> </span><span class="nv">$REF</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">   </span>--variant<span class="w"> </span>gvcf.list<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="w">   </span>-O<span class="w"> </span><span class="nv">$GVCF_TMP</span>
+</code></pre></div>
+<p>Finally, we are ready to perform joint calling:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># GenotypeGVCFs outputs</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nv">VCF_FINAL</span><span class="o">=</span>./3.calls/gatk/littorina.gatk.vcf.gz
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Commands</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="c1"># GenotypeGVCFs needs a directory for writing intermediate files;</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="c1"># on a typical computer cluster, this would be /home/scratch or similar.</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>mkdir<span class="w"> </span>./tmp
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="nb">time</span><span class="w"> </span>gatk<span class="w"> </span>GenotypeGVCFs<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">    </span>--java-options<span class="w"> </span><span class="s2">"-Xmx4000m"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">    </span>-R<span class="w"> </span><span class="nv">$REF</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">    </span>--heterozygosity<span class="w"> </span><span class="m">0</span>.005<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">    </span>--include-non-variant-sites<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">    </span>-V<span class="w"> </span><span class="nv">$GVCF_TMP</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="w">    </span>-O<span class="w"> </span><span class="nv">$VCF_FINAL</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="w">    </span>--tmp-dir<span class="w"> </span>./tmp
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="c1"># The combined gVCF and the temporary directory are no longer needed</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>rm<span class="w"> </span><span class="si">${</span><span class="nv">GVCF_TMP</span><span class="si">}</span>*
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>rm<span class="w"> </span>-r<span class="w"> </span>./tmp
+</code></pre></div>
+Where the <code>--heterozygosity</code> value feeds into computing the prior probability that a locus is non-reference (across all samples). Following a <a href="https://snparcher.github.io/">state-of-the-art variant calling pipeline</a> tailored to non-model organisms, we set a value that is five-fold higher than the default of 0.001 calibrated for human populations. You can read more on the <code>--heterozygosity</code> flag <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035890871-Heterozygosity">here</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">More on GATK</p>
+<p>In a real pipeline, you'd probably prefer <code>GenomicsDBImport</code> over <code>CombineGVCFs</code> (see <a href="https://gatk.broadinstitute.org/hc/en-us/sections/360007226651-Best-Practices-Workflows">GATK best practices</a>). The former produces a 'GenomicsDB workspace' rather than a single combined gVCF, which scales far better as samples accumulate.</p>
+</div>
+<h2 id="137-bonus-comparing-bcftools-and-gatk-callsets">(1.3.7) BONUS: comparing BCFtools and GATK callsets<a class="headerlink" href="#137-bonus-comparing-bcftools-and-gatk-callsets" title="Permanent link">&para;</a></h2>
+<p>Now, we have two VCF files to compare: <code>littorina.vcf.gz</code> under <code>3.calls/bcftools</code> and <code>littorina.gatk.vcf.gz</code> under <code>3.calls/gatk</code>. If you're curious and have the time and energy, try to work through the following questions:</p>
+<ol>
+<li>
+<p>Which VCF contains more variant sites?</p>
+<details class="success">
+<summary>Show answer</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nv">VCF_B</span><span class="o">=</span><span class="m">3</span>.calls/bcftools/littorina.vcf.gz
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nv">VCF_G</span><span class="o">=</span><span class="m">3</span>.calls/gatk/littorina.gatk.vcf.gz
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># The bcftools manual tells us that -V can be use to EXCLUDE categories of sites</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="c1"># such as snps, indel or 'ref'. The latter are basically invariant sites!       </span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>bcftools<span class="w"> </span>view<span class="w"> </span>-H<span class="w"> </span>-V<span class="w"> </span>ref<span class="w"> </span><span class="nv">$VCF_B</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="w"> </span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>bcftools<span class="w"> </span>view<span class="w"> </span>-H<span class="w"> </span>-V<span class="w"> </span>ref<span class="w"> </span><span class="nv">$VCF_G</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="w"> </span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="c1"># Seems there are so many more invariant sites in the GATK VCF! But is this real?</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="c1"># Let's check what SITE CATEGORIES there are in the two VCFs</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>bcftools<span class="w"> </span>query<span class="w"> </span>-f<span class="w"> </span><span class="s1">'%TYPE'</span><span class="w"> </span><span class="nv">$VCF_B</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>bcftools<span class="w"> </span>query<span class="w"> </span>-f<span class="w"> </span><span class="s1">'%TYPE'</span><span class="w"> </span><span class="nv">$VCF_G</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="c1"># The bcftools VCF ones look standard, but what are all these GATK categories??</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="c1"># Maybe let's just count 'standard' variant sites...</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>bcftools<span class="w"> </span>view<span class="w"> </span>-H<span class="w"> </span>-v<span class="w"> </span>snps,indels<span class="w"> </span><span class="nv">$VCF_G</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="c1"># This looks closer the bcftools number!</span>
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="c1"># And the other GATK sites? Let's take a look.</span>
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>bcftools<span class="w"> </span>view<span class="w"> </span>-H<span class="w"> </span>-V<span class="w"> </span>snps,indels,ref<span class="w"> </span><span class="nv">$VCF_G</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>less<span class="w"> </span>-S
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="c1"># Maybe at a specific region...</span>
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a>bcftools<span class="w"> </span>view<span class="w"> </span>-H<span class="w"> </span>-r<span class="w"> </span>NC_090245.1:118-125<span class="w"> </span><span class="nv">$VCF_G</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>less<span class="w"> </span>-S
+<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>
+<a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="c1"># What do you think is going on?</span>
+</code></pre></div>
+</details>
+</li>
+<li>
+<p>Which VCF contains more indels?</p>
+<details class="success">
+<summary>Show answer</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>bcftools<span class="w"> </span>view<span class="w"> </span>-H<span class="w"> </span>-v<span class="w"> </span>indels<span class="w"> </span><span class="nv">$VCF_B</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>bcftools<span class="w"> </span>view<span class="w"> </span>-H<span class="w"> </span>-v<span class="w"> </span>indels<span class="w"> </span><span class="nv">$VCF_G</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+</code></pre></div>
+</details>
+<ol>
+<li>How many SNP sites agree between the two VCFs?</li>
+</ol>
+<details class="success">
+<summary>Show answer</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Option 1: this matches both positions &amp; alleles</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>bcftools<span class="w"> </span>isec<span class="w"> </span>-n<span class="o">=</span><span class="m">2</span><span class="w"> </span>-i<span class="w"> </span><span class="s1">'TYPE="snp"'</span><span class="w"> </span>-i<span class="w"> </span><span class="s1">'TYPE="snp"'</span><span class="w"> </span><span class="nv">$VCF_B</span><span class="w"> </span><span class="nv">$VCF_G</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># Option 2: this matches positions only</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="c1"># Why is 'sort' needed here? 🤔 </span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>comm<span class="w"> </span>-12<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">    </span>&lt;<span class="o">(</span>bcftools<span class="w"> </span>query<span class="w"> </span>-i<span class="w"> </span><span class="s1">'TYPE="snp"'</span><span class="w"> </span>-f<span class="w"> </span><span class="s1">'%CHROM\t%POS\n'</span><span class="w"> </span><span class="nv">$VCF_B</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="o">)</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="w">    </span>&lt;<span class="o">(</span>bcftools<span class="w"> </span>query<span class="w"> </span>-i<span class="w"> </span><span class="s1">'TYPE="snp"'</span><span class="w"> </span>-f<span class="w"> </span><span class="s1">'%CHROM\t%POS\n'</span><span class="w"> </span><span class="nv">$VCF_G</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="o">)</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="w">    </span>wc<span class="w"> </span>-l
+</code></pre></div>
+</details>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../1.2.alignment/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1.2. Alignment to reference">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                1.2. Alignment to reference
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../1.4.filtering/" class="md-footer__link md-footer__link--next" aria-label="Next: 1.4. Variant filtering">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                1.4. Variant filtering
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.instant", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,26 @@
+## 1.1. Read QC & trimming
+
+
+
+
+## 1.2. Alignment to reference
+
+
+
+
+## 1.3. Variant calling
+
+
+
+
+## 1.4. Variant filtering
+
+
+
+
+## 2.1. Principal component analysis (PCA)
+
+
+
+
+## 2.2. Genome scans

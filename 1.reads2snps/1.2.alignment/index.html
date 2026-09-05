@@ -1,0 +1,1231 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A hands-on manual for the NHM variant calling course.">
+      
+      
+        <meta name="author" content="Natural History Museum">
+      
+      
+        <link rel="canonical" href="https://speciationgroup.github.io/nhm-variant-calling/1.reads2snps/1.2.alignment/">
+      
+      
+        <link rel="prev" href="../1.1.qc-trimming/">
+      
+      
+        <link rel="next" href="../1.3.calling/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>1.2. Alignment to reference - NHM Variant Calling</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#12-alignment-to-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="NHM Variant Calling" class="md-header__button md-logo" aria-label="NHM Variant Calling" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NHM Variant Calling
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1.2. Alignment to reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SpeciationGroup/nhm-variant-calling" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SpeciationGroup/nhm-variant-calling
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="NHM Variant Calling" class="md-nav__button md-logo" aria-label="NHM Variant Calling" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    NHM Variant Calling
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SpeciationGroup/nhm-variant-calling" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SpeciationGroup/nhm-variant-calling
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Overview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. Welcome!
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reads-to-SNPs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reads-to-SNPs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.1.qc-trimming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1. Read QC & trimming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2. Alignment to reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2. Alignment to reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#121-the-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.2.1) The reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#122-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.2.2) Alignment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#123-the-sam-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.2.3) The SAM format
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#124-marking-duplicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.2.4) Marking duplicates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#126-bam-qc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.2.6) BAM QC
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#127-process-all-samples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.2.7) Process all samples
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.3.calling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3. Variant calling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.4.filtering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.4. Variant filtering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Basic analyses
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Basic analyses
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2.basic_analyses/2.1.PCA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1. Principal component analysis (PCA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2.basic_analyses/2.2.genome_scans/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2. Genome scans
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#121-the-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.2.1) The reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#122-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.2.2) Alignment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#123-the-sam-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.2.3) The SAM format
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#124-marking-duplicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.2.4) Marking duplicates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#126-bam-qc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.2.6) BAM QC
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#127-process-all-samples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (1.2.7) Process all samples
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="12-alignment-to-reference">1.2. Alignment to reference<a class="headerlink" href="#12-alignment-to-reference" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Learning objectives</p>
+<p>By the end of this worksheet, you will:</p>
+<ul>
+<li>Map reads with BWA and process the output with SAMtools.</li>
+<li>Understand the structure of a SAM / BAM file.</li>
+<li>Perform some basic QC on a SAM / BAM.</li>
+</ul>
+</div>
+<p>In this tutorial we will use the BWA-MEM algorithm from the <a href="https://github.com/lh3/bwa">BWA</a> (Burrows-Wheeler Aligner) package is the most widely used short read aligner. BWA uses the <a href="https://www.youtube.com/watch?v=0qMGAsrYS0g">Burrows-Wheeler Transform</a> to reorganise the reference genome into an index in which any sequence can be looked up directly, rather than compared against the genome position by position. Today, we will be using <a href="https://github.com/bwa-mem2/bwa-mem2">BWA-MEM2</a>, a faster incarnation of the original algorithm that produces identical alignments; even <a href="https://github.com/lh3/minibwa">faster algorithms</a> are on the horizon, so keep an eye for the future.</p>
+<h2 id="121-the-reference">(1.2.1) The reference<a class="headerlink" href="#121-the-reference" title="Permanent link">&para;</a></h2>
+<p>We do need a reference genome assembly for aligning our reads. We will download it from a public archive hosted by <a href="https://www.ncbi.nlm.nih.gov/">NCBI</a>. As always, it's reasonable to create a new directory to store the reference:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>./ref
+</code></pre></div>
+<p>We're going to use the US_GU_Lsax_2.0 assembly - search for <em>Littorina saxatilis</em> in the <a href="https://www.ncbi.nlm.nih.gov/datasets/genome/">NCBI genome browser</a> or, alternatively, open <a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_037325665.1/">this link</a> directly. Try locating the 'FTP' button. FTP stands for File Transfer Protocol and is a convention for serving files over a network - here, it simply takes you to a plain directory listing of everything NCBI holds for this assembly. Copy the link to the file ending in <code>_genomic.fna.gz</code> (alternatively, we pasted it below!).</p>
+<p>We can now download the assembly using the <code>wget</code> command, specifying <code>./ref</code> as the target directory:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>wget<span class="w"> </span>https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/037/325/665/GCF_037325665.1_US_GU_Lsax_2.0/GCF_037325665.1_US_GU_Lsax_2.0_genomic.fna.gz<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>--directory-prefix<span class="o">=</span>./ref
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">FASTA extensions</p>
+<p>Note that <code>.fa</code>, <code>.fasta</code> and <code>.fna</code> are all acceptable extensions for FASTA files - the latter just specifies that we're dealing with nucleic acids.</p>
+</div>
+<p>As always, let's inspect the FASTA's statistics with <code>seqkit stats</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># -N 50 appends N50 as an extra column</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>seqkit<span class="w"> </span>stats<span class="w"> </span>-N<span class="w"> </span><span class="m">50</span><span class="w"> </span>./ref/*
+</code></pre></div>
+<p>That's a decent-sized metazoan genome!! It's approximately 12 times larger than the <em>C. elegans</em> genome, for example, but still 2.5 times smaller than the human genome. As indicated by the N50 statistic, it's also well-assembled, with half of the assembly in pieces longer than 67.5 Mb. This is chromosome-scale.</p>
+<p>Aligning a decent depth sample against this assembly would take a few hours. To avoid this computational burden, let's focus on the first 1 MB of the largest chromosome. Again, seqkit proves its usefulness:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Define variables to shorten the command itself</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">IN_FASTA</span><span class="o">=</span>./ref/GCF_037325665.1_US_GU_Lsax_2.0_genomic.fna.gz
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">OUT_FASTA</span><span class="o">=</span>./ref/chrom1_1Mb.fa
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Some piped seqkit commands</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>seqkit<span class="w"> </span>sort<span class="w"> </span>-l<span class="w"> </span>-r<span class="w"> </span><span class="nv">$IN_FASTA</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>seqkit<span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>seqkit<span class="w"> </span>subseq<span class="w"> </span>-r<span class="w"> </span><span class="m">1</span>:1000000<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$OUT_FASTA</span>
+</code></pre></div>
+<p>You can check the <a href="https://bioinf.shenwei.me/seqkit/">seqkit docs</a> for the <code>sort</code>, <code>head</code> and <code>subseq</code> commands, but the overall purpose seems clear. Voilà! We've extracted our target 1 Mb. In fact, also thanks to processing with seqkit, the reads we're working with align exactly against this sequence.</p>
+<div class="admonition tip">
+<p class="admonition-title">How to identify the best reference for your project?</p>
+<p>In general, you should aim for your reference assembly to be of the highest possible quality, as defined by N50 and <a href="https://busco.ezlab.org/">BUSCO</a> completeness, among other statistics. Depending on your organism and your dataset, this might be the best-assembled genome from among your sequenced samples, representing the same or a related species. On the other hand, chromosome-level (or T2T, i.e., telomere-to-telomere) assemblies are available from <a href="https://www.ncbi.nlm.nih.gov/datasets/genome/">public repositories</a> for many eukaryotes, making them an obvious choice. Assemblies of a very high quality are also available from the <a href="https://portal.darwintreeoflife.org/">Darwin Tree of Life project</a>.</p>
+<p>The choice of reference assembly is far from inconsequential (see, e.g., Mohn et al., 2025), starting at the alignment stage. For example, you might imagine that reads will map better to a con-specific than to a hetero-specific reference genome.</p>
+</div>
+<h2 id="122-alignment">(1.2.2) Alignment<a class="headerlink" href="#122-alignment" title="Permanent link">&para;</a></h2>
+<p>Before we can run the alignment, we need to <strong>index the reference</strong>. Indexing is a one-off procedure that writes a data structure allowing the aligner to navigate the reference quickly. It's as simple as:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">REF</span><span class="o">=</span>./ref/chrom1_1Mb.fa
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>bwa-mem2<span class="w"> </span>index<span class="w"> </span><span class="nv">$REF</span>
+</code></pre></div>
+<p>This should produce five files with unfamiliar extensions: <code>.0123</code>, <code>.amb</code>, <code>.ann</code>, <code>.bwt.2bit.64</code> and <code>.pac</code>. The index files should always remain in the same directory as their parent sequence.</p>
+<p>Now, we can run the actual alignment using BWA-MEM2. This takes the reference and (trimmed) read files as inputs and produces an alignment in the <strong>SAM format</strong>, which we discuss below.</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Remember to have SAMPLE defined</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nv">SAMPLE</span><span class="o">=</span><span class="s2">"ACF_2"</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># BWA-MEM2 inputs:</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nv">REF</span><span class="o">=</span>./ref/chrom1_1Mb.fa
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nv">TRIMMED_FASTQ_1</span><span class="o">=</span>./1.trimmed/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>_R1.fastq.gz
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nv">TRIMMED_FASTQ_2</span><span class="o">=</span>./1.trimmed/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>_R2.fastq.gz
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1"># BWA-MEM2 outputs:</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nv">SAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.sam
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="c1"># Commands:</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>./2.aligned
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>bwa-mem2<span class="w"> </span>mem<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span>-t<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span>-R<span class="w"> </span><span class="s2">"@RG\tID:</span><span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span><span class="s2">\tSM:</span><span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span><span class="s2">\tPL:ILLUMINA\tLB:</span><span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span><span class="s2">\tPU:</span><span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="nv">$REF</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">    </span><span class="nv">$TRIMMED_FASTQ_1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="nv">$TRIMMED_FASTQ_2</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span>&gt;<span class="w"> </span><span class="nv">$SAM</span>
+</code></pre></div>
+Let's review the flags:</p>
+<ul>
+<li><code>-t</code> specifies the number of threads. This is normally set to be quite large (e.g., 18 or even more), since alignment tends to be relatively slow.</li>
+<li><code>-R</code> specifies a string of characters defining the so-called <strong>read group</strong>. The string starts with <code>@RG</code>, with subsequent fields separated by tabs (<code>\t</code>). Here, we repeat the sample ID in most fields (though it should primarily go to <code>SM</code>, or 'sample'), except <code>PL</code> ('sequencing platform'). A 'minimal' read group is essential for variant calling (to link reads with their samples of origin) and enough for our purposes, but the information could be much richer. For instance, a sample sequenced twice on different flowcells would keep one <code>SM</code> value but take two read groups with distinct <code>ID</code> ('identifier') and <code>PU</code> ('platform unit') values.</li>
+</ul>
+<p>Note that the output SAM file is specified through <code>&gt;</code> rather than a flag. BWA-MEM2 does have an output flag (<code>-o</code>), but writing to standard output is a common pattern. Also note how the reference and FASTQ files are provided without any flags, as positional arguments.</p>
+<h2 id="123-the-sam-format">(1.2.3) The SAM format<a class="headerlink" href="#123-the-sam-format" title="Permanent link">&para;</a></h2>
+<p>The SAM (Sequence Alignment/Map) format defines yet another set of conventions (described in full <a href="https://samtools.github.io/hts-specs/SAMv1.pdf">here</a>) to store sequence information in a text file. But where a FASTQ record describes a read in isolation, a SAM record describes a read together with the position it was assigned in the reference. The file splits into a header and a 'body'.</p>
+<p>Let's inspect the header first. We will use a command from the dedicated <a href="https://www.htslib.org/doc/samtools.html">SAMtools</a> library:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">SAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.sam
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>samtools<span class="w"> </span>view<span class="w"> </span>-H<span class="w"> </span><span class="nv">$SAM</span>
+</code></pre></div>
+<p>It is the <code>-H</code> flag that restricts the output to the header. Every header line starts with <code>@</code> followed by a two-letter record type. You should find three kinds:</p>
+<ul>
+<li><strong><code>@SQ</code></strong> - one line per reference sequence, with its name (<code>SN</code>) and length (<code>LN</code>). Ours has a single <code>@SQ</code> line, since we aligned to one sequence only.</li>
+<li><strong><code>@RG</code></strong> - the different fields of the read group we passed to BWA-MEM2.</li>
+<li><strong><code>@PG</code></strong> - one line per command that touched the file. Two should be shown: one for BWA-MEM2 and one for <code>samtools view</code>. The latter is added 'on the fly' as the header is printed to screen, and is not actually part of the file.</li>
+</ul>
+<p>Now - the alignments themselves. In contrast to FASTQ, there's a one-to-one correspondence between SAM records and lines of the file. We can request the first two with <code>head -2</code> and pipe them to <code>less -S</code> for convenient viewing:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Note that samtools view omits the header by default</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>samtools<span class="w"> </span>view<span class="w"> </span><span class="nv">$SAM</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-2<span class="w"> </span><span class="p">|</span><span class="w"> </span>less<span class="w"> </span>-S
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">On <code>less</code></p>
+<p>In contrast to <code>cat</code>, <code>less</code> lets you navigate its input rather than letting everything scroll past non-interactively (compare the behaviour by substituting <code>head -200</code> into the example above!). The <code>-S</code> flag stops long lines from wrapping onto the next line, so each record stays on one row. Use the arrow keys to move (up and down by line, left and right by half a screen width), and press <code>Q</code> to quit.</p>
+</div>
+<p>Each line consists of 11 mandatory tab-separated fields, followed by optional ones. The meaning of mandatory fields is fixed by position, and below we highlight some of the key ones (see the <a href="https://samtools.github.io/hts-specs/SAMv1.pdf">specs</a> for a full breakdown):</p>
+<ul>
+<li><strong>Field 2 - <code>FLAG</code></strong>. An integer encoding a set of yes/no properties, each a power of two, <strong>summed together</strong>. The individual attributes are encoded by smaller integers (or <a href="https://en.wikipedia.org/wiki/Bit_field">bits</a>), so any combination of them sums to a unique total. You can use <code>samtools flags</code> to decode it. For example, <code>samtools flags 99</code> returns <code>PAIRED,PROPER_PAIR,MREVERSE,READ1</code>, i.e. bits 1, 2, 32 and 64. In human terms, we learn that the read is paired-end (bit 1) and that both mates are properly aligned (bit 2). See section 1.4 of the <a href="https://samtools.github.io/hts-specs/SAMv1.pdf">specs</a> for the full list.</li>
+<li><strong>Fields 3 + 4 - <code>RNAME</code> + <code>POS</code></strong>. These constitute the alignment itself, specifying the reference sequence (in a real setting - one out of many chromosomes or assembly contigs) and the position of the leftmost aligned base. <code>RNAME</code> must match one of the <code>@SQ</code> names from the header.</li>
+<li><strong>Field 5 - <code>MAPQ</code></strong>. The <strong>mapping quality</strong> - a Phred-scaled measure of confidence that the read belongs here rather than anywhere else. Note that this is a different quantity from the FASTQ QUAL scores, which describe base calls rather than placement - a read can consist of perfectly-called bases and still be impossible to place. We will meet MAPQ again in worksheet 1.4, where the <code>MQ</code> annotation we filter on is its per-site average.</li>
+</ul>
+<p>Uncompressed SAM files tend to get quite big. Luckily, we can easily compress them into a binary BAM format using SAMtools:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Specify the input SAM and output BAM</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nv">SAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.sam
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nv">BAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.bam
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>samtools<span class="w"> </span>view<span class="w"> </span>-b<span class="w"> </span><span class="nv">$SAM</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$BAM</span>
+</code></pre></div>
+<p>Where <code>-b</code> specifies the output format as BAM. Note that <code>samtools view</code> could be connected with a pipe directly to <code>bwa-mem2 mem</code>, avoiding the generation of a SAM intermediate altogether.</p>
+<p>Finally, let's see how much space we've saved through compression:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># -l lists one file per line, with details</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1"># -h prints sizes in human-readable units</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>ls<span class="w"> </span>-lh<span class="w"> </span><span class="nv">$SAM</span><span class="w"> </span><span class="nv">$BAM</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># We don't need the SAM anymore</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>rm<span class="w"> </span><span class="nv">$SAM</span>
+</code></pre></div>
+<p>The BAM takes up nearly four times less space - well worth it.</p>
+<div class="admonition tip">
+<p class="admonition-title">SAM compression</p>
+<p>Different levels of output compression can be specified with <code>samtools view</code> (<code>--output-fmt-option level=INT</code>, from 1 to 9), but higher compression comes at the cost of longer processing time. With small files, the default level 6 is reasonable. The <code>CRAM</code> format compresses even further (9 MB here), but it can only be read if the reference is also provided.</p>
+</div>
+<h2 id="124-marking-duplicates">(1.2.4) Marking duplicates<a class="headerlink" href="#124-marking-duplicates" title="Permanent link">&para;</a></h2>
+<p>Additional processing is required to make sure our BAM is fit for variant calling. One artefact that becomes apparent after alignment is <strong>read duplication</strong>, when multiple read pairs map to the same position. Depending on the mechanism, two types of duplicates are distinguished: optical and PCR. <strong>Optical duplicates</strong> arise during imaging, when a single cluster on the flow cell is read as two adjacent ones. <strong>PCR duplicates</strong> arise earlier, during library preparation, when amplification produces several copies of one fragment.</p>
+<p>Below, we follow the <a href="http://www.htslib.org/algorithms/duplicate.html">recommended procedure</a> for duplicate marking. This requires some pre-processing of the BAMs:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Define input and output;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1"># 'tmp' stands for 'temporary'</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nv">IN_BAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.bam
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="nv">OUT_BAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.tmp.bam
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1"># A few commands...</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>samtools<span class="w"> </span>collate<span class="w"> </span>-@<span class="w"> </span><span class="m">1</span><span class="w"> </span>-O<span class="w"> </span><span class="nv">$IN_BAM</span><span class="w"> </span><span class="p">|</span><span class="se">\</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>samtools<span class="w"> </span>fixmate<span class="w"> </span>-@<span class="w"> </span><span class="m">1</span><span class="w"> </span>-m<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span><span class="p">|</span><span class="se">\</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>samtools<span class="w"> </span>sort<span class="w"> </span>-@<span class="w"> </span><span class="m">1</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">$OUT_BAM</span><span class="w"> </span>-
+</code></pre></div>
+The three SAMtools commands are piped together, and the <code>-</code> function as placeholders for inputs (<code>fixmate</code>) and outputs. <code>@</code> specifies threads. Now, the commands themselves:</p>
+<ul>
+<li><strong><code>collate</code></strong> groups reads of the same name together (read from field 1 of the SAM / BAM), so that both mates of a pair sit side by side in the file. </li>
+<li><strong><code>fixmate</code></strong> writes into each read's record a summary of the other read of its pair. Some  (but not all) of this information is already present in fields 7-9 of the SAM / BAM. The <code>-m</code> flag in particular specifies adding a 'mate score' - a sum of the mate's base qualities. </li>
+<li><strong><code>sort</code></strong> sorts the file according to reference coordinates, as expected by downstream tools.</li>
+</ul>
+<p>We're now ready to actually mark the duplicates: </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># We return to the original BAM name</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nv">IN_BAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.tmp.bam
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nv">OUT_BAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.bam
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>samtools<span class="w"> </span>markdup<span class="w"> </span>-@<span class="w"> </span><span class="m">1</span><span class="w"> </span>-d<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="nv">$IN_BAM</span><span class="w"> </span><span class="nv">$OUT_BAM</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>rm<span class="w"> </span><span class="nv">$IN_BAM</span>
+</code></pre></div>
+<p>Again, <code>-@</code> specifies the threads. <code>-d 100</code> is more interesting as it sets the optical duplicate distance - the distance on the flow cell within which two identical reads are called optical rather than PCR duplicates. According to the SAMtools docs, a distance of 100 units is recommended for HiSeq-style platforms (2500 for NovaSeq).</p>
+<p>Crucially, duplicates are <strong>marked, not removed</strong>. The information is encoded in the <code>FLAG</code> (2nd) field of the SAM / BAM (to be precise - its value is incremented by 1024) and is later read by downstream tools such as variant callers. How many duplicates have been marked? We can count by 'fishing' for the tags added by <code>samtools markdup</code> using the <code>grep</code> Unix command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Make sure the variable points at the final file</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nv">BAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.bam
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Count all reads </span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>samtools<span class="w"> </span>view<span class="w"> </span>-c<span class="w"> </span><span class="nv">$BAM</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Count all duplicates</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>samtools<span class="w"> </span>view<span class="w"> </span>-c<span class="w"> </span>-f<span class="w"> </span><span class="m">1024</span><span class="w"> </span><span class="nv">$BAM</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="c1"># Count optical duplicate tags</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>samtools<span class="w"> </span>view<span class="w"> </span><span class="nv">$BAM</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s1">'dt:Z:SQ'</span><span class="w"> </span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="c1"># Count PCR duplicate tags</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>samtools<span class="w"> </span>view<span class="w"> </span><span class="nv">$BAM</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s1">'dt:Z:LB'</span>
+</code></pre></div>
+<p>In the ACF_2 sample, it appears that PCR duplicates are way more common!</p>
+<h2 id="126-bam-qc">(1.2.6) BAM QC<a class="headerlink" href="#126-bam-qc" title="Permanent link">&para;</a></h2>
+<p>Some final sanity checks before we move on. SAMtools provides several options to collect useful statistics on our alignment. Probably the single most informative report comes from <code>samtools flagstat</code> which, as you might have guessed, uses the <code>FLAG</code> field of the file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nv">BAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.bam
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1"># The report will go to a new subdirectory</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nv">FLAGSTAT</span><span class="o">=</span>./2.aligned/qc/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.flagstat
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>./2.aligned/qc
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>samtools<span class="w"> </span>flagstat<span class="w"> </span><span class="nv">$BAM</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$FLAGSTAT</span>
+</code></pre></div>
+<p>We saved the <code>flagstat</code> report to disk, as you normally would, but for now let's display it with line numbering for ease of orientation:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># -n adds line numbers</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>cat<span class="w"> </span>-n<span class="w"> </span><span class="nv">$FLAGSTAT</span>
+</code></pre></div>
+<p>Every line is a count of reads carrying a particular combination of <code>FLAG</code> bits (ignore the <code>+ 0</code> part, as the bit it counts is reportedly never set by Illumina instruments). Some key results:</p>
+<ul>
+<li><strong>Line 5 - duplicates</strong> is the number of duplicates we've seen earlier.</li>
+<li><strong>Line 8 - primary mapped</strong> is the proportion of reads that the aligner managed to place on the reference at all. This should be satisfyingly high in our example dataset, given how it was created... Across many samples in a real setting, you could be concerned if some display exceedingly low (or high) mapping rates for no apparent reason.</li>
+<li><strong>Line 12 - properly paired</strong> is a strict assessment of whether both mates not only map but also do so at an expected distance and orientation relative to each other. It should be lower than the mapping rate above.</li>
+<li><strong>Lines 15-16 - mate mapped to a different chr</strong> are 0 for a trivial reason: we just used one reference sequence. Normally, an excess of cross-chromosome pairs points at structural variation, misassembly or contamination.</li>
+</ul>
+<p>What <code>flagstat</code> doesn't tell us is where along the reference the reads landed. A very useful overview is provided by <code>samtools coverage</code> with the <code>-m</code> flag. This draws an ASCII histogram with position on the x axis and <strong>percentage of bases covered</strong> (in bins) on the y axis:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>samtools<span class="w"> </span>coverage<span class="w"> </span>-m<span class="w"> </span><span class="nv">$BAM</span>
+</code></pre></div>
+<p>Alongside the plot it prints the summary statistics. In general, a rather flat histogram is a good sign, while dips or peaks indicate problems - like repeat regions or assembly gaps.</p>
+<p>Finally, the richest information is provided by <code>samtools stats</code>, which reports several dozen statistics at once:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nv">STATS</span><span class="o">=</span>./2.aligned/qc/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.stats
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>samtools<span class="w"> </span>stats<span class="w"> </span><span class="nv">$BAM</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$STATS</span>
+</code></pre></div>
+<p>The report is organised by two-letter section codes in the first column. <code>SN</code> holds the summaries; the remaining sections are whole distributions rather than single values. <code>IS</code> are insert sizes, <code>RL</code> read lengths, <code>COV</code> coverage, <code>GCF</code>/<code>GCL</code> GC content, and so on - each a table you could plot directly.</p>
+<p>Let's at least inspect the <code>SN</code> lines. We can pull them out using <code>grep</code>, a Unix utility for searching lines that match a <a href="https://en.wikipedia.org/wiki/Regular_expression">regular expression</a>. We ask for lines that start (<code>^</code>) with <code>SN</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>grep<span class="w"> </span><span class="s2">"^SN"</span><span class="w"> </span><span class="nv">$STATS</span>
+</code></pre></div>
+<p>Some important additional information include:</p>
+<ul>
+<li><strong><code>reads MQ0</code></strong> shows the number of aligned reads with a mapping quality of 0. These are simply counted as mapped by <code>flagstat</code>.</li>
+<li><strong><code>error rate</code></strong> - is the proportion of aligned bases that differ from the reference. </li>
+<li><strong><code>insert size average</code></strong> is the average length of inserts as calculated from the alignment, while <strong><code>insert size standard deviation</code></strong> is.. the standard deviation. The latter number reveals the frequency at which the mates map at implausible distances from each other. </li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Collecting BAM stats</p>
+<p>In a 'production pipeline', we would probably like to check our BAMs in bulk rather than examining one sample at a time. The <a href="https://multiqc.info/">MultiQC</a> software has been designed to help with exactly this task on FASTQ and BAM files, taking FastQC, fastp and SAMtools reports as input.</p>
+</div>
+<h2 id="127-process-all-samples">(1.2.7) Process all samples<a class="headerlink" href="#127-process-all-samples" title="Permanent link">&para;</a></h2>
+<p>Just like previously, there remain 10 samples that need to be processed in an analogous manner. Using the commands introduced above and techniques from the previous worksheet, try and write a shell script to process the remaining samples. For simplicitly, focus on the command that are essential to producing the final BAM.</p>
+<details class="success">
+<summary>Show the answer</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># Run as: ./run_align.sh samples.txt</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="c1"># Samples are read from a file, one name per line.</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="nv">IN_FILE</span><span class="o">=</span><span class="nv">$1</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>readarray<span class="w"> </span>-t<span class="w"> </span>SAMPLES<span class="w"> </span>&lt;<span class="w"> </span><span class="s2">"</span><span class="nv">$IN_FILE</span><span class="s2">"</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="c1"># The reference is the same for every sample.</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="nv">REF</span><span class="o">=</span>./ref/chrom1_1Mb.fa
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>./2.aligned<span class="w"> </span>./2.aligned/qc
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="k">for</span><span class="w"> </span>SAMPLE<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="si">${</span><span class="nv">SAMPLES</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Processing sample </span><span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span><span class="s2">..."</span>
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="w">    </span><span class="nv">TRIMMED_FASTQ_1</span><span class="o">=</span>./1.trimmed/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>_R1.fastq.gz
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="w">    </span><span class="nv">TRIMMED_FASTQ_2</span><span class="o">=</span>./1.trimmed/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>_R2.fastq.gz
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="w">    </span><span class="nv">SAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.sam
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="w">    </span><span class="nv">BAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.bam
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="w">    </span><span class="nv">TMP_BAM</span><span class="o">=</span>./2.aligned/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.tmp.bam
+<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="w">    </span><span class="nv">FLAGSTAT</span><span class="o">=</span>./2.aligned/qc/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.flagstat
+<a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a>
+<a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="w">    </span>bwa-mem2<span class="w"> </span>mem<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a><span class="w">        </span>-t<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="w">        </span>-R<span class="w"> </span><span class="s2">"@RG\tID:</span><span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span><span class="s2">\tSM:</span><span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span><span class="s2">\tPL:ILLUMINA\tLB:</span><span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span><span class="s2">\tPU:</span><span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a><span class="w">        </span><span class="nv">$REF</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a><span class="w">        </span><span class="nv">$TRIMMED_FASTQ_1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a><span class="w">        </span><span class="nv">$TRIMMED_FASTQ_2</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a><span class="w">        </span>&gt;<span class="w"> </span><span class="nv">$SAM</span>
+<a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a>
+<a id="__codelineno-18-33" name="__codelineno-18-33" href="#__codelineno-18-33"></a><span class="w">    </span>samtools<span class="w"> </span>view<span class="w"> </span>-b<span class="w"> </span>-o<span class="w"> </span><span class="nv">$BAM</span><span class="w"> </span><span class="nv">$SAM</span>
+<a id="__codelineno-18-34" name="__codelineno-18-34" href="#__codelineno-18-34"></a><span class="w">    </span>rm<span class="w"> </span><span class="nv">$SAM</span>
+<a id="__codelineno-18-35" name="__codelineno-18-35" href="#__codelineno-18-35"></a>
+<a id="__codelineno-18-36" name="__codelineno-18-36" href="#__codelineno-18-36"></a><span class="w">    </span>samtools<span class="w"> </span>collate<span class="w"> </span>-@<span class="w"> </span><span class="m">1</span><span class="w"> </span>-O<span class="w"> </span><span class="nv">$BAM</span><span class="w"> </span><span class="p">|</span><span class="se">\</span>
+<a id="__codelineno-18-37" name="__codelineno-18-37" href="#__codelineno-18-37"></a><span class="w">    </span>samtools<span class="w"> </span>fixmate<span class="w"> </span>-@<span class="w"> </span><span class="m">1</span><span class="w"> </span>-m<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span><span class="p">|</span><span class="se">\</span>
+<a id="__codelineno-18-38" name="__codelineno-18-38" href="#__codelineno-18-38"></a><span class="w">    </span>samtools<span class="w"> </span>sort<span class="w"> </span>-@<span class="w"> </span><span class="m">1</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">$TMP_BAM</span><span class="w"> </span>-
+<a id="__codelineno-18-39" name="__codelineno-18-39" href="#__codelineno-18-39"></a>
+<a id="__codelineno-18-40" name="__codelineno-18-40" href="#__codelineno-18-40"></a><span class="w">    </span>samtools<span class="w"> </span>markdup<span class="w"> </span>-@<span class="w"> </span><span class="m">1</span><span class="w"> </span>-d<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="nv">$TMP_BAM</span><span class="w"> </span><span class="nv">$BAM</span>
+<a id="__codelineno-18-41" name="__codelineno-18-41" href="#__codelineno-18-41"></a><span class="w">    </span>rm<span class="w"> </span><span class="nv">$TMP_BAM</span>
+<a id="__codelineno-18-42" name="__codelineno-18-42" href="#__codelineno-18-42"></a>
+<a id="__codelineno-18-43" name="__codelineno-18-43" href="#__codelineno-18-43"></a><span class="w">    </span>samtools<span class="w"> </span>flagstat<span class="w"> </span><span class="nv">$BAM</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$FLAGSTAT</span>
+<a id="__codelineno-18-44" name="__codelineno-18-44" href="#__codelineno-18-44"></a>
+<a id="__codelineno-18-45" name="__codelineno-18-45" href="#__codelineno-18-45"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Finished sample </span><span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span><span class="s2">."</span>
+<a id="__codelineno-18-46" name="__codelineno-18-46" href="#__codelineno-18-46"></a><span class="k">done</span>
+</code></pre></div>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../1.1.qc-trimming/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1.1. Read QC &amp; trimming">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                1.1. Read QC & trimming
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../1.3.calling/" class="md-footer__link md-footer__link--next" aria-label="Next: 1.3. Variant calling">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                1.3. Variant calling
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.instant", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
