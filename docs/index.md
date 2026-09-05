@@ -21,17 +21,16 @@ Instead of copying-pasting, try retyping and annotating at least some of the com
 
 ## Lectures
 
-Feel free to review the lecture slides at any time:
-
-- [1.1. Read QC & trimming](slides/1.1.qc-trimming.pdf)
-- [1.2. Alignment to reference](slides/1.2.alignment.pdf)
-- [1.3. Variant calling](slides/1.3.calling.pdf)
-- [1.4. Variant filtering](slides/1.4.filtering.pdf)
+Feel free to review the lecture [slides](slides/20260904_Physalia_NHM_slides_new.pdf) at any time.
 
 ## Papers
 
-We provide PDSs for all the papers referenced in the work. Just click on the in-text reference ([Cock et al., 2010](papers/cock2010.pdf)) to download!
+We provide PDFs for all the papers referenced in the work. Just click on the in-text reference ([Cock et al., 2010](papers/cock2010.pdf)) to download!
 
 ## Source
 
 This manual is built from a public repository: [github.com/SpeciationGroup/nhm-variant-calling](https://github.com/SpeciationGroup/nhm-variant-calling).
+
+## Acknowledgements
+
+We thank Mark Ravinet for ... . The workflow is based on 
