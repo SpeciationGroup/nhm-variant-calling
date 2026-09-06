@@ -2,13 +2,6 @@
 
 Welcome to the manual for the **variant calling** course at Natural History Museum, London (September, 2026). Here, you'll find all the exercises for our two modules - *Reads-to-SNPs* (≈ day 1 of the course) and *Basic analyses* (≈ day 2). The manual will always be available to you as a future point of reference.
 
-!!! abstract "Learning objectives"
-    By the end of this course you will be familar with:
-    
-    - The major steps of variant-centred analyses such as quality control, alignment, calling and filtering.
-    - Standard file formats in bioinformatics such as FASTQ, SAM and VCF
-    - SEAN TO ADD
-
 ## About
 
 ![alt text](image.png)
@@ -17,7 +10,7 @@ Welcome to the manual for the **variant calling** course at Natural History Muse
 
 We suggest that you take notes throughout the course, for which provide a [Markdown template](resources/notes.txt){ download="notes.md" }. To render Markdown, you can edit it in RStudio or VS Code. Alternatively, you can open the document in a code editor with Bash syntax highlighting, or even treat it as a plain text file.
 
-Instead of copying-pasting, try retyping and annotating at least some of the commands yourself. There is as this is the surest way to learn!
+Instead of copying-pasting, try retyping and annotating at least some of the commands yourself. There is no better way to learn!
 
 ## Lectures
 
@@ -25,12 +18,12 @@ Feel free to review the lecture [slides](slides/20260904_Physalia_NHM_slides_new
 
 ## Papers
 
-We provide PDFs for all the papers referenced in the work. Just click on the in-text reference ([Cock et al., 2010](papers/cock2010.pdf)) to download!
+We provide PDFs for all the papers referenced in the work. Just click on the in-text reference ([Cock et al., 2010](papers/Cock_2010.pdf)) to download!
 
-## Source
+## The repo
 
-This manual is built from a public repository: [github.com/SpeciationGroup/nhm-variant-calling](https://github.com/SpeciationGroup/nhm-variant-calling).
+This manual is built from a [public repository](https://github.com/SpeciationGroup/nhm-variant-calling).
 
 ## Acknowledgements
 
-We thank Mark Ravinet for ... . The workflow is based on 
+The Reads-to-SNPs workflow is based on the standard pipeline for processing *Littorina* short-read data ([Reeve et al., 2024](papers/Reeve_2024.pdf)).   

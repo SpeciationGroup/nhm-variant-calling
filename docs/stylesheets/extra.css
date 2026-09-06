@@ -26,3 +26,36 @@
 .md-typeset .footnote {
   margin-top: 0;
 }
+
+/* --- Littorina glyph after the site title ----------------------------------
+ * Puts the snail silhouette immediately after "NHM Variant Calling" in the
+ * header, sized and coloured like a text glyph rather than an image.
+ *
+ * Why ::after on the first .md-header__topic and not theme.logo: Material's
+ * logo slot renders BEFORE the title and is a fixed-size <img>. An ::after on
+ * the title keeps the mark inline, scales it with the title font, and leaves
+ * the logo slot free.
+ *
+ * Why mask-image and not background-image: the mask takes only the SVG's alpha
+ * and paints it with `currentColor`, so the glyph tracks the header text colour
+ * automatically in both palettes — no second white-fill copy of the asset.
+ *
+ * The header has two .md-header__topic children: [1] the site name, [2] the
+ * current page title, which Material swaps in on scroll. :first-child pins the
+ * glyph to the site name so it does not follow the page title.
+ *
+ * width is 1.373em against height 1em — the silhouette's own aspect ratio
+ * (viewBox 32.9626 x 24) — so `contain` fits with no letterboxing.
+ * ------------------------------------------------------------------------- */
+.md-header__topic:first-child .md-ellipsis::after {
+  content: "";
+  display: inline-block;
+  height: 1em;
+  width: 1.373em;          /* = 32.9626 / 24, the SVG's aspect ratio */
+  margin-left: 0.35em;
+  vertical-align: -0.14em; /* sits the body on the text baseline */
+  background-color: currentColor;
+  -webkit-mask: url("../images/littorina.svg") no-repeat center / contain;
+          mask: url("../images/littorina.svg") no-repeat center / contain;
+  flex: none;              /* .md-ellipsis is a flex item; don't let it squash */
+}
