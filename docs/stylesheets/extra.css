@@ -59,3 +59,32 @@
           mask: url("../images/littorina.svg") no-repeat center / contain;
   flex: none;              /* .md-ellipsis is a flex item; don't let it squash */
 }
+
+/* --- "Last modified" line under each worksheet title -----------------------
+ * Written by hand as the two lines directly under the H1:
+ *
+ *     Last modified: 2026-09-06
+ *     { .last-modified }
+ *
+ * The attribute list must sit on its OWN line to attach the class to the
+ * paragraph; placed at the end of the text line, `attr_list` leaves it as
+ * literal text instead.
+ *
+ * Colour comes from Material's own muted-text variable rather than a fixed
+ * grey, so it stays legible in both the light and slate palettes.
+ *
+ * The margins here look odd until you know the numbers. Material gives h1
+ * `font-size: 2em; margin: 0 0 1.25em`, and .md-typeset sits at 0.8rem against
+ * a root of 125% (20px) — so the h1 is 32px and its bottom margin is 40px. That
+ * margin collapses with this paragraph's top margin to `40px + (negative)`, so
+ * closing the gap needs a large negative value: -1.8rem = -36px leaves ~4px.
+ * Expressed in rem, not em, so it does not shift if the font-size below changes.
+ *
+ * Scoped to this class rather than to h1 generally, because index.md has an h1
+ * with no date line under it and should keep the normal spacing.
+ * ------------------------------------------------------------------------- */
+.md-typeset .last-modified {
+  margin-top: -1.8rem;    /* h1 margin-bottom is 40px; this leaves ~4px */
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+}
