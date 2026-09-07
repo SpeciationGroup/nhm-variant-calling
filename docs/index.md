@@ -1,6 +1,6 @@
 # 0.1. Welcome!
 
-Welcome to the manual for the **variant calling** course at Natural History Museum, London (September, 2026). Here, you'll find all the exercises for our two modules - *Reads-to-SNPs* (≈ day 1 of the course) and *Basic analyses* (≈ day 2). The manual will always be available to you as a future point of reference.
+Welcome to the manual for the **variant calling** course at Natural History Museum, London (September, 2026). Here, you'll find all the exercises for our two modules - *Reads-to-SNPs* and *Basic analyses*. The manual will always be available to you as a future point of reference.
 
 ## About
 
@@ -18,7 +18,7 @@ Feel free to review the lecture [slides](slides/20260904_Physalia_NHM_slides_new
 
 ## Papers
 
-We provide PDFs for all the papers referenced in the work. Just click on the in-text reference ([Cock et al., 2010](papers/Cock_2010.pdf)) to download!
+We provide PDFs for all the papers referenced in the work. Just click on the in-text reference (such as [Cock et al., 2010](papers/Cock_2010.pdf)) to download!
 
 ## The repo
 
