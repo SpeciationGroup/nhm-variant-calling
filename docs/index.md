@@ -14,7 +14,7 @@ Instead of copying-pasting, try retyping and annotating at least some of the com
 
 ## Lectures
 
-Feel free to review the lecture [slides](slides/20260904_Physalia_NHM_slides_new.pdf) at any time.
+Feel free to review the lecture [slides](slides/20260908_Physalia_NHM_slides_new.pdf) at any time.
 
 ## Papers
 
