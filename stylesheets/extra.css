@@ -1,0 +1,90 @@
+/* Custom brand colour for the NHM Variant Calling course.
+   The palette in mkdocs.yml sets `primary: deep purple` (a sane named fallback
+   that also makes the header text/icons white). This file overrides the exact
+   hex to the requested #9A3BFF. Because it targets the same attribute selector
+   the theme uses and is loaded *after* the theme CSS, it wins the cascade. */
+[data-md-color-primary="deep-purple"] {
+  --md-primary-fg-color:        #9A3BFF;  /* top bar */
+  --md-primary-fg-color--light: #b47bff;
+  --md-primary-fg-color--dark:  #7a25d6;
+}
+
+/* Use the same purple for accents (links, hover, active TOC) so the theme
+   reads as one system rather than purple bar + teal links. */
+[data-md-color-accent="deep-purple"] {
+  --md-accent-fg-color: #9A3BFF;
+}
+
+/* Footnotes (our citations) are always emitted by MkDocs in one block at the very
+   bottom of the page, introduced by a horizontal rule. Since pages introduce them
+   with their own "## References" heading, that rule reads as a stray line between
+   the heading and the list — hide it and tighten the gap. */
+.md-typeset .footnote > hr {
+  display: none;
+}
+
+.md-typeset .footnote {
+  margin-top: 0;
+}
+
+/* --- Littorina glyph after the site title ----------------------------------
+ * Puts the snail silhouette immediately after "NHM Variant Calling" in the
+ * header, sized and coloured like a text glyph rather than an image.
+ *
+ * Why ::after on the first .md-header__topic and not theme.logo: Material's
+ * logo slot renders BEFORE the title and is a fixed-size <img>. An ::after on
+ * the title keeps the mark inline, scales it with the title font, and leaves
+ * the logo slot free.
+ *
+ * Why mask-image and not background-image: the mask takes only the SVG's alpha
+ * and paints it with `currentColor`, so the glyph tracks the header text colour
+ * automatically in both palettes — no second white-fill copy of the asset.
+ *
+ * The header has two .md-header__topic children: [1] the site name, [2] the
+ * current page title, which Material swaps in on scroll. :first-child pins the
+ * glyph to the site name so it does not follow the page title.
+ *
+ * width is 1.373em against height 1em — the silhouette's own aspect ratio
+ * (viewBox 32.9626 x 24) — so `contain` fits with no letterboxing.
+ * ------------------------------------------------------------------------- */
+.md-header__topic:first-child .md-ellipsis::after {
+  content: "";
+  display: inline-block;
+  height: 1em;
+  width: 1.373em;          /* = 32.9626 / 24, the SVG's aspect ratio */
+  margin-left: 0.35em;
+  vertical-align: -0.14em; /* sits the body on the text baseline */
+  background-color: currentColor;
+  -webkit-mask: url("../images/littorina.svg") no-repeat center / contain;
+          mask: url("../images/littorina.svg") no-repeat center / contain;
+  flex: none;              /* .md-ellipsis is a flex item; don't let it squash */
+}
+
+/* --- "Last modified" line under each worksheet title -----------------------
+ * Written by hand as the two lines directly under the H1:
+ *
+ *     Last modified: 2026-09-06
+ *     { .last-modified }
+ *
+ * The attribute list must sit on its OWN line to attach the class to the
+ * paragraph; placed at the end of the text line, `attr_list` leaves it as
+ * literal text instead.
+ *
+ * Colour comes from Material's own muted-text variable rather than a fixed
+ * grey, so it stays legible in both the light and slate palettes.
+ *
+ * The margins here look odd until you know the numbers. Material gives h1
+ * `font-size: 2em; margin: 0 0 1.25em`, and .md-typeset sits at 0.8rem against
+ * a root of 125% (20px) — so the h1 is 32px and its bottom margin is 40px. That
+ * margin collapses with this paragraph's top margin to `40px + (negative)`, so
+ * closing the gap needs a large negative value: -1.8rem = -36px leaves ~4px.
+ * Expressed in rem, not em, so it does not shift if the font-size below changes.
+ *
+ * Scoped to this class rather than to h1 generally, because index.md has an h1
+ * with no date line under it and should keep the normal spacing.
+ * ------------------------------------------------------------------------- */
+.md-typeset .last-modified {
+  margin-top: -1.8rem;    /* h1 margin-bottom is 40px; this leaves ~4px */
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+}
